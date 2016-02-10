@@ -597,7 +597,7 @@ void Cell::setVolume(double volume) {
 
 /**
  * @brief Increment the volume/area of the Cell by some amount.
- * @details This routine is called by the TrackGenerator during track 
+ * @details This routine is called by the TrackGenerator during track
  *          generation and segmentation.
  * @param volume the amount to increment the current volume by
  */
@@ -668,7 +668,7 @@ void Cell::setRotation(double* rotation, int num_axes, std::string units) {
   _rotation_matrix[4] = sin(psi) * sin(theta) * sin(phi) +
                         cos(psi) * cos(phi);
   _rotation_matrix[5] = cos(theta) * sin(psi);
-  _rotation_matrix[6] = cos(psi) * sin(theta) * cos(phi) + 
+  _rotation_matrix[6] = cos(psi) * sin(theta) * cos(phi) +
                         sin(psi) * sin(phi);
   _rotation_matrix[7] = cos(psi) * sin(theta) * sin(phi) -
                         sin(psi) * cos(phi);
@@ -680,7 +680,7 @@ void Cell::setRotation(double* rotation, int num_axes, std::string units) {
 
 /**
  * @brief Increment the number of instances of this Cell.
- * @details This routine is called by the TrackGenerator during track 
+ * @details This routine is called by the TrackGenerator during track
  *          generation and segmentation.
  */
 void Cell::incrementNumInstances() {
@@ -884,7 +884,7 @@ bool Cell::containsPoint(Point* point) {
 
     /* Return false if the Point is not in the correct Surface halfspace */
     if (iter->second->_surface->evaluate(point) * iter->second->_halfspace
-        < -ON_SURFACE_THRESH)
+        < 0.0)
       return false;
   }
 
@@ -937,9 +937,9 @@ double Cell::minSurfaceDist(LocalCoords* coords) {
 /**
  * @brief Returns true if this Cell is filled with a fissionable Material.
  * @details If the Cell is filled by a Material, this method will simply query
- *          the filling Material. If the Cell is filled by a Universe, this 
+ *          the filling Material. If the Cell is filled by a Universe, this
  *          method will consider any Materials filling those Cells contained
- *          by the filling Universe. This method should not be called prior to 
+ *          by the filling Universe. This method should not be called prior to
  *          the calling of the Geometry::computeFissionability() method.
  * @return true if contains a fissionable Material
  */
